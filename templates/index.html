@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Image App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #0074D9;
+            margin-bottom: 20px;
+        }
+        .center-image {
+            display: block;
+            margin: 0 auto;
+            width: 600px; /* Adjust the width as needed */
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #0074D9;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005ea6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Our Random Image Gallery</h1>
+    <img src="{{ url_for('static', filename='images/' + random_image) }}" alt="Random Image" class="center-image">
+    <br>
+    <button onclick="window.location.reload();">Next Image</button>
+</body>
+</html>
