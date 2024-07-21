@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Image App</title>
+    <title>ImageSpeak</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +24,18 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10px;
+            color:red;
+        }
         button {
             background-color: #0074D9;
             color: #fff;
@@ -39,9 +51,48 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Our Random Image Gallery</h1>
+    <h1>ImageSpeak: Describe the Image</h1>
     <img src="{{ url_for('static', filename='images/' + random_image) }}" alt="Random Image" class="center-image">
     <br>
-    <button onclick="window.location.reload();">Next Image</button>
+    <div class="timer-container">
+        <button id="new-image-button" onclick="window.location.reload();">New Image</button>
+        <span style="margin: 0 10px;">&nbsp;</span> <!-- Add spacing -->
+        <button id="start-timer-button">Start Timer</button>
+        <span style="margin: 0 10px;">&nbsp;</span> <!-- Add spacing -->
+        <div id="timer">1:05</div>
+    </div>
+    <script>
+        let timeLeft = 65; // 1 minute 5 seconds
+        const timerElement = document.getElementById('timer');
+        const newImageButton = document.getElementById('new-image-button');
+        const startTimerButton = document.getElementById('start-timer-button');
+        let timerRunning = false;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                alert('Your time is up!!!!! Try a new image');
+                // Handle the end of the timer (e.g., show a pop-up or redirect)
+                timerRunning = false;
+            } else if (timerRunning) {
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        newImageButton.addEventListener('click', () => {
+            timeLeft = 65; // Reset the timer
+            timerRunning = false; // Stop the timer
+            updateTimer();
+        });
+
+        startTimerButton.addEventListener('click', () => {
+            timerRunning = true; // Start the timer
+            updateTimer();
+        });
+    </script>
 </body>
 </html>
