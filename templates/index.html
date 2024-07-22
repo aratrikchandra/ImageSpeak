@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,34 +9,62 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-image: url('../static/images/bg2.jpg');
+            /* Replace with your image path */
+            background-size: cover;
+            /* Adjust to fit the screen */
+            background-repeat: no-repeat;
             background-color: #f9f9f9;
+            /* Fallback color if the image doesn't load */
         }
+
         h1 {
             font-size: 36px;
             font-weight: bold;
             color: #0074D9;
             margin-bottom: 20px;
         }
+
         .center-image {
             display: block;
             margin: 0 auto;
-            width: 600px; /* Adjust the width as needed */
+            width: 600px;
+            /* Adjust the width as needed */
             border: 2px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .timer-container {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 20px;
         }
+
+        /* #timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10px;
+            color: red;
+        } */
         #timer {
             font-size: 24px;
             font-weight: bold;
             margin-left: 10px;
-            color:red;
+            color: red;
+            animation: blink 1s infinite alternate; /* Add this line for blinking effect */
         }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+
         button {
             background-color: #0074D9;
             color: #fff;
@@ -45,20 +74,24 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #005ea6;
         }
     </style>
 </head>
+
 <body>
     <h1>ImageSpeak: Describe the Image</h1>
     <img src="{{ url_for('static', filename='images/' + random_image) }}" alt="Random Image" class="center-image">
     <br>
     <div class="timer-container">
         <button id="new-image-button" onclick="window.location.reload();">New Image</button>
-        <span style="margin: 0 10px;">&nbsp;</span> <!-- Add spacing -->
+        <span style="margin: 0 10px;">&nbsp;</span>
         <button id="start-timer-button">Start Timer</button>
-        <span style="margin: 0 10px;">&nbsp;</span> <!-- Add spacing -->
+        <span style="margin: 0 10px;">&nbsp;</span>
+        <button id="reset-timer-button">Reset Timer</button>
+        <span style="margin: 0 10px;">&nbsp;</span>
         <div id="timer">1:05</div>
     </div>
     <script>
@@ -66,6 +99,7 @@
         const timerElement = document.getElementById('timer');
         const newImageButton = document.getElementById('new-image-button');
         const startTimerButton = document.getElementById('start-timer-button');
+        const resetTimerButton = document.getElementById('reset-timer-button');
         let timerRunning = false;
 
         function updateTimer() {
@@ -75,7 +109,7 @@
             timeLeft--;
 
             if (timeLeft < 0) {
-                alert('Your time is up!!!!! Try a new image');
+                alert('Your time is up! Try a new image.');
                 // Handle the end of the timer (e.g., show a pop-up or redirect)
                 timerRunning = false;
             } else if (timerRunning) {
@@ -93,6 +127,13 @@
             timerRunning = true; // Start the timer
             updateTimer();
         });
+
+        resetTimerButton.addEventListener('click', () => {
+            timeLeft = 65; // Reset the timer
+            timerRunning = false; // Stop the timer
+            updateTimer();
+        });
     </script>
 </body>
+
 </html>
